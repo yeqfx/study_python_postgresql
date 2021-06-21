@@ -1,15 +1,27 @@
-from mypylib.mypglib import connect_NoDB
+import psycopg2 as pg
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
-conn = connect_NoDB()
+CONNECT_INFO = 'host=db user=postgres password=postgres'
 
-conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+try:
+    conn = pg.connect(CONNECT_INFO)
 
-cur = conn.cursor()
+    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 
-SQL = "CREATE DATABASE book_store"
+    cur = conn.cursor()
 
-cur.execute(SQL)
+    SQL = "CREATE DATABASE community_board"
+    cur.execute(SQL)
 
-cur.close()
-conn.close()
+except Exception as e:
+    print('postgresql database create error')
+    print(e)
+  
+else:
+    print('Database community_board created')
+
+finally:
+    if cur:
+        cur.close()
+    if conn:
+        conn.close()
