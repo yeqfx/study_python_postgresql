@@ -1,0 +1,1 @@
+CONNECT_INFO = 'host=db dbname=community_board user=postgres password=postgres'
